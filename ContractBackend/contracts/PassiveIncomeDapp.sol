@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.10;
 
 
 
@@ -111,9 +111,9 @@ interface ERC20 {
 }
 
 
-import {FlashLoanSimpleReceiverBase} from "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
-import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import {IERC20} from "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol";
+import "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
+import "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
+import  "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol";
 
 
 
@@ -121,7 +121,12 @@ import {IERC20} from "@aave/core-v3/contracts/dependencies/openzeppelin/contract
 
  
 
-contract PassiveIncomeArbitrage {
+contract PassiveIncomeArbitrage is FlashLoanSimpleReceiverBase {
+
+
+   constructor(address _addressProvider)
+        FlashLoanSimpleReceiverBase(IPoolAddressesProvider(_addressProvider))
+    {}
 
 
 address private  s_Network;
@@ -170,14 +175,14 @@ function withdraw(address asset, uint amount) public {
 
     
     function RequestFlashLoan(address _tokenAddress, uint256 _burrowedFlashLoanamount) external payable{
-     address receiverAddress = address(this);
+        address receiverAddress = address(this);
         address asset = _tokenAddress;
         uint256 amount = _burrowedFlashLoanamount;
         bytes memory params = "";
         uint16 referralCode = 0;
 
 
-        POOL.flashLoanSimple(
+          POOL.flashLoanSimple(
             receiverAddress,
             asset,
             amount,
@@ -189,21 +194,22 @@ function withdraw(address asset, uint amount) public {
 
 
 function executeOperation (
-        address _reserve,
-        uint256 _burrowedFlashLoanamount,
-        uint256 _fee,
+        address asset,
+        uint256 amount,
+        uint256 premium,
+        address initiator,
         bytes calldata _params
     ) external override returns (bool) {
      
 
-       /**@dev arbitrage code will go here-*/
-        bool status = performPassiveIncomeStratergy(s_Network,_reserve,initialDeposits,_burrowedFlashLoanamount);
+    //    /**@dev arbitrage code will go here-*/
+        bool status = performPassiveIncomeStratergy( s_Network,asset,initialDeposits,premium);
 
 
-        uint256 amountOwed =  _burrowedFlashLoanamount + _fee;
-        IERC20(_reserve).approve(address(POOL), amountOwed);
+        uint256 amountOwed = amount + premium;
+        IERC20(asset).approve(address(POOL), amountOwed);
 
-        return status;}
+        return true;}
 
 
 
