@@ -1,6 +1,6 @@
 # DeFi-FlashLoan-Platform
 
-## One Stop Platform for All your DeFi Investments Without Risk.
+## One Stop Platform for All your DeFi Investments Without any Risk.
 A Platform for all your various investments in Decentralised Finance(DeFi) which is nowadays more<br>
 technical for a common user. To Harness the full potential of DeFi for Common users without any<br>
 RISK, we are Designing a platform(a GUI) which will help users to make investments in DeFi easily.<br>
