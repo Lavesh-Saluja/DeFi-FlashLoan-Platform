@@ -35,11 +35,7 @@ contract Arbritrage is FlashLoanSimpleReceiverBase {
             params,
             referralCode
         );
-
-
-
-
-     }
+}
 
 
 
@@ -51,31 +47,29 @@ contract Arbritrage is FlashLoanSimpleReceiverBase {
 
     /**@dev this function is called after the contract has received the loan
         using which we can perform arbitrage operratins
-       @param  _reserve The address of the asset being borrowed in the flash loan
-       @param  _amount: The amount of the asset being borrowed in the flash loan
+       @param  asset The address of the asset being borrowed in the flash loan
+       @param  amount: The amount of the asset being borrowed in the flash loan
        @param  _params: A bytes array that can be used to pass additional parameters to the executeOperation function
-       @param  _fee: The fee charged by Aave for the flash loan, 
+       @param  premium: The fee charged by Aave for the flash loan, 
      */
 
     function executeOperation (
-        address _reserve,
-        uint256 _amount,
-        uint256 _fee,
+        address asset,
+        uint256 amount,
+        uint256 premium,
+        address initiator,
         bytes calldata _params
     ) external override returns (bool) {
      
 
-       /**@dev arbitrage code will go here
-
-       */
-
-       bool status = performArbitrage();
+    //    /**@dev arbitrage code will go here-*/
+        // bool status = performArbitrage();
 
 
         uint256 amountOwed = amount + premium;
         IERC20(asset).approve(address(POOL), amountOwed);
 
-        return status;}
+        return true;}
 
 
 
@@ -87,5 +81,5 @@ contract Arbritrage is FlashLoanSimpleReceiverBase {
 
 
 
-     eceive() external payable {}
+     receive() external payable {}
 }
