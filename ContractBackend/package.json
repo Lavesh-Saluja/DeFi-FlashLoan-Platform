@@ -1,3 +1,8 @@
 {
-  "name": "hardhat-project"
+  "name": "hardhat-project",
+  "dependencies": {
+    "@aave/core-v3": "^1.17.2",
+    "@openzeppelin/contracts": "^4.8.1",
+    "dotenv": "^16.0.3"
+  }
 }
