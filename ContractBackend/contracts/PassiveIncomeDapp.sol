@@ -4,7 +4,6 @@ pragma solidity ^0.8.10;
 
 
 
-
 library CometStructs {
   struct AssetInfo {
     uint8 offset;
@@ -129,7 +128,7 @@ contract PassiveIncomeArbitrage is FlashLoanSimpleReceiverBase {
     {}
 
 
-address private  s_Network;
+address private  s_Network ;
 uint256 initialDeposits;
 
 
