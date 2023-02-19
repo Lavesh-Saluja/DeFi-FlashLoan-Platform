@@ -120,7 +120,7 @@ import  "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol"
 
  
 
-contract PassiveIncomeArbitrage is FlashLoanSimpleReceiverBase {
+contract PassiveIncomeDapp is FlashLoanSimpleReceiverBase {
 
 
    constructor(address _addressProvider)
@@ -138,7 +138,7 @@ function setNetwork (address _NetworkAddress)public {
 }
 
 function setInitialDeposits (uint256 deposit)public {
-    initialDeposits= deposit;
+    initialDeposits=deposit;
 
 
 }
