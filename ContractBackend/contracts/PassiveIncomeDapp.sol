@@ -4,7 +4,6 @@ pragma solidity ^0.8.10;
 
 
 
-
 library CometStructs {
   struct AssetInfo {
     uint8 offset;
@@ -121,7 +120,7 @@ import  "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol"
 
  
 
-contract PassiveIncomeArbitrage is FlashLoanSimpleReceiverBase {
+contract PassiveIncomeDapp is FlashLoanSimpleReceiverBase {
 
 
    constructor(address _addressProvider)
@@ -129,7 +128,7 @@ contract PassiveIncomeArbitrage is FlashLoanSimpleReceiverBase {
     {}
 
 
-address private  s_Network;
+address private  s_Network ;
 uint256 initialDeposits;
 
 
@@ -139,7 +138,7 @@ function setNetwork (address _NetworkAddress)public {
 }
 
 function setInitialDeposits (uint256 deposit)public {
-    initialDeposits= deposit;
+    initialDeposits=deposit;
 
 
 }
@@ -215,7 +214,7 @@ function executeOperation (
 
 
 
-
+// 0x1c6d7f15935D275a1521D3457dF3b9B7ee89d6Ca
 
 
 
