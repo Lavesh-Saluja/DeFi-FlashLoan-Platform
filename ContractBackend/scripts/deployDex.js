@@ -7,7 +7,7 @@ async function main() {
 
   await dex.deployed();
 
-  console.log("Dex contract deployed: ", dex.address);
+  console.log("Dex contract deployed: ", dex.address);//0x4D38fE6e10d05cd1750875864c63207aFB70342f
 }
 
 main().catch((error) => {
