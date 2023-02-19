@@ -6,6 +6,7 @@ import Footer from "./components/Footer.js"
 import Navbar from "./components/Navbar.js"
 import LoginPage from './components/LoginPage';
 import reportWebVitals from './reportWebVitals';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
