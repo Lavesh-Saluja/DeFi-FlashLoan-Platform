@@ -1,5 +1,4 @@
 {
-    "solidity.defaultCompiler": "localNodeModule",
     "eslint.enable": false,
     "jshint.enable": false,
     "standard.enable": false

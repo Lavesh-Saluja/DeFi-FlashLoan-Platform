@@ -1,4 +1,7 @@
 {
+  "name": "hardhat-project"
+}
+{
   "devDependencies": {
     "tailwindcss": "^3.2.7"
   }
