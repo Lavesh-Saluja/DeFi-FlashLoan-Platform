@@ -5,7 +5,10 @@ import {PASSIVE_INCOME_ADDRESS,passive_Income_abi} from "./Constant/index"
 import {ethers} from 'ethers';
 import Web3Modal from "web3modal"
 const Forms2 = () => {
-    const WalletHandler=useContext(WalletCheck)
+    const [walletConnected, setWalletConnected] = useState(false);
+    const [signer,setSigner]=useState();
+    const [provider,setProvider]=useState();
+    const [walletAddress,setWalletAddress]=useState();
     const web3ModalRef = useRef();
     const getProviderOrSigner = async (needSigner = false) => {
         // Connect to Metamask
@@ -20,13 +23,13 @@ const Forms2 = () => {
           throw new Error("Change network to Goerli");
         }
           const signer = web3Provider.getSigner();
-          WalletHandler.setSigner(signer);
-          WalletHandler.setProvider(web3Provider);
+         setSigner(signer);
+        setProvider(web3Provider);
           console.log('------------------------------------');
-          console.log(WalletHandler.provider);
+          console.log(provider);
           console.log('------------------------------------');
-          WalletHandler.setWalletAddress(await signer.getAddress());
-          console.log(WalletHandler.walletAddress)
+          setWalletAddress(await signer.getAddress());
+          console.log(walletAddress)
           return signer;
 
       };
@@ -40,8 +43,8 @@ const Forms2 = () => {
           // Get the provider from web3Modal, which in our case is MetaMask
           // When used for the first time, it prompts the user to connect their wallet
           await getProviderOrSigner();
-          WalletHandler.setWalletConnected(true);
-          console.log(WalletHandler.walletConnected);
+         setWalletConnected(true);
+          console.log(walletConnected);
         } catch (err) {
           console.error(err);
         }
@@ -51,25 +54,45 @@ const Forms2 = () => {
         event.preventDefault();
         const signers=await connectWallet(true);
         
-        console.log(signers);
+        console.log(signer);
 
-        // try{
-        //     const passiveContract=new ethers.Contract(
-        //         PASSIVE_INCOME_ADDRESS,
-        //         passive_Income_abi,
-        //         signers
-        //       );
-        //       const tx=await passiveContract.RequestFlashLoan(0xdc31ee1784292379fbb2964b3b9c4124d8f89c60,amtBorrow);
-        //       await tx.wait();
-        // }
-        // catch(e){
-        //     console.log(e);
-        // }
+        try{
+            const passiveContract=new ethers.Contract(
+                PASSIVE_INCOME_ADDRESS,
+                passive_Income_abi,
+                signer
+              );
+              console.log('------------------------------------');
+              console.log("done till connecting");
+              console.log('------------------------------------');
+              const tx=await passiveContract.RequestFlashLoan("0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",amtBorrow);
+              await tx.wait();
+        }
+        catch(e){
+            console.log(e);
+        }
       };
 
     const [token, setToken] = useState('USDC');
     const [amtDeposite, setamt] = useState();
     const [amtBorrow, setBorrow] = useState();
+
+
+    useEffect(() => {
+        // if wallet is not connected, create a new instance of Web3Modal and connect the MetaMask wallet
+        if (!walletConnected) {
+          // Assign the Web3Modal class to the reference object by setting it's `current` value
+          // The `current` value is persisted throughout as long as this page is open
+          web3ModalRef.current = new Web3Modal({
+            network: "goerli",
+            providerOptions: {},
+            disableInjectedProvider: false,
+          });
+          connectWallet();
+        }},[walletConnected]);
+
+
+
     return (
         <>
             <div class="grid md:grid-cols-2 md:gap-6">
