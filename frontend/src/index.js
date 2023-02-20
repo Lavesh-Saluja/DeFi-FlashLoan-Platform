@@ -6,12 +6,13 @@ import Footer from "./components/Footer.js"
 import Navbar from "./components/Navbar.js"
 import LoginPage from './components/LoginPage';
 import reportWebVitals from './reportWebVitals';
-
+import Forms2 from './components/Forms2';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
   <React.StrictMode>
     <App />
+<Forms2/>
     <Footer/>
   </React.StrictMode>
   
